@@ -24,7 +24,7 @@ app.post('/referrals', async (req, res) => {
     const referralid = uuidv4();
 
     try {
-        const existingReferral = await prisma.User.findFirst({
+        const existingReferral = await prisma.user.findFirst({
             where: {
                 OR: [
                     { email },
@@ -35,7 +35,7 @@ app.post('/referrals', async (req, res) => {
         if (existingReferral) {
             return res.json({ referralId: existingReferral.referralid,message:"User Already Exist" });
         }
-        const newReferral = await prisma.User.create({
+        const newReferral = await prisma.user.create({
             data: {
                 name,
                 email,
