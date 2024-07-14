@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 
+
 require('dotenv').config();
 
 const prisma = new PrismaClient();
@@ -13,13 +14,17 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+app.use('/',(req,res)=>{
+    res.json("HI");
+})
+
 app.post('/referrals', async (req, res) => {
     const { name, email, phone } = req.body;
     console.log(req.body);
     const referralid = uuidv4();
 
     try {
-        const existingReferral = await prisma.user.findFirst({
+        const existingReferral = await prisma.User.findFirst({
             where: {
                 OR: [
                     { email },
@@ -38,6 +43,7 @@ app.post('/referrals', async (req, res) => {
                 referralid,
             },
         });
+        console.log(newReferral);
         const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 587,
