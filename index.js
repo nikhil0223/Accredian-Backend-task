@@ -14,10 +14,6 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-app.use('/',(req,res)=>{
-    res.json("HI");
-})
-
 app.post('/referrals', async (req, res) => {
     const { name, email, phone } = req.body;
     console.log(req.body);
